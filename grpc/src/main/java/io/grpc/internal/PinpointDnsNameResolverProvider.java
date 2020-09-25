@@ -54,7 +54,7 @@ public final class PinpointDnsNameResolverProvider extends NameResolverProvider 
                     name,
                     args,
                     // rename thread
-                    wrapDnsExecutor(this.dnsExecutor));
+                    wrapDnsExecutor(this.dnsExecutor)
                     Stopwatch.createUnstarted(),
                     InternalServiceProviders.isAndroid(getClass().getClassLoader()));
         } else {
