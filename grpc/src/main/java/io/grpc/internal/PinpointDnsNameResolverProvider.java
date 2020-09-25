@@ -54,8 +54,7 @@ public final class PinpointDnsNameResolverProvider extends NameResolverProvider 
                     name,
                     params,
                     // rename thread
-                    wrapDnsExecutor(this.dnsExecutorService),
-                    GrpcUtil.getDefaultProxyDetector());
+                    wrapDnsExecutor(this.dnsExecutorService));
         } else {
             return null;
         }
