@@ -17,9 +17,9 @@
 package io.grpc.internal;
 
 import com.google.common.base.Preconditions;
-import com.google.common.base.Stopwatch;
+/*import com.google.common.base.Stopwatch;
 import io.grpc.InternalServiceProviders;
-import io.grpc.NameResolver;
+import io.grpc.NameResolver;*/
 import com.navercorp.pinpoint.common.util.Assert;
 import io.grpc.Attributes;
 import io.grpc.NameResolverProvider;
@@ -43,7 +43,7 @@ public final class PinpointDnsNameResolverProvider extends NameResolverProvider 
     }
 
     @Override
-    public DnsNameResolver newNameResolver(URI targetUri, NameResolver.Args args) {
+    public DnsNameResolver newNameResolver(URI targetUri, Attributes params) {
         if (SCHEME.equals(targetUri.getScheme())) {
             String targetPath = Preconditions.checkNotNull(targetUri.getPath(), "targetPath");
             Preconditions.checkArgument(targetPath.startsWith("/"),
@@ -52,11 +52,10 @@ public final class PinpointDnsNameResolverProvider extends NameResolverProvider 
             return new DnsNameResolver(
                     targetUri.getAuthority(),
                     name,
-                    args,
+                    params,
                     // rename thread
                     wrapDnsExecutor(this.dnsExecutorService),
-                    Stopwatch.createUnstarted(),
-                    InternalServiceProviders.isAndroid(getClass().getClassLoader()));
+                    GrpcUtil.getDefaultProxyDetector());
         } else {
             return null;
         }
